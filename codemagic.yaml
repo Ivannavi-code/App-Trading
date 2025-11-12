@@ -15,16 +15,20 @@ workflows:
       - name: Set Android SDK location
         script: |
           echo "sdk.dir=$ANDROID_SDK_ROOT" > "$CM_BUILD_DIR/android/local.properties"
+      - name: Install Gradle wrapper
+        script: |
+          cd android
+          gradle wrapper --gradle-version 8.0.2
       - name: Make gradlew executable
         script: |
           chmod +x android/gradlew
       - name: Build Android APK
         script: |
           cd android
-          ./gradlew assembleRelease --no-daemon --stacktrace
+          ./gradlew clean
+          ./gradlew assembleRelease --no-daemon --stacktrace --info
     artifacts:
       - android/app/build/outputs/apk/release/*.apk
-      - android/app/build/outputs/apk/debug/*.apk
     publishing:
       email:
         recipients:
