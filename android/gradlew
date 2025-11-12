@@ -1,0 +1,7 @@
+#!/bin/sh
+
+APP_BASE_NAME=`basename "$0"`
+APP_HOME=`pwd`
+GRADLE_USER_HOME="${GRADLE_USER_HOME:-$HOME/.gradle}"
+
+exec "$(dirname "$0")/gradlew" "$@"
