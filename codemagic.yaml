@@ -21,17 +21,10 @@ workflows:
       - name: Set Android SDK location
         script: |
           echo "sdk.dir=$ANDROID_SDK_ROOT" > "$CM_BUILD_DIR/android/local.properties"
-      - name: Set Gradle version to 8.3
-        script: |
-          cd android
-          sed -i '' 's|gradle-.*-all.zip|gradle-8.3-all.zip|g' gradle/wrapper/gradle-wrapper.properties || \
-          sed -i 's|gradle-.*-all.zip|gradle-8.3-all.zip|g' gradle/wrapper/gradle-wrapper.properties
-      - name: Make gradlew executable
-        script: |
-          chmod +x android/gradlew
       - name: Build Android
         script: |
           cd android
+          chmod +x gradlew
           ./gradlew assembleDebug --no-daemon
     artifacts:
       - android/app/build/outputs/**/*.apk
